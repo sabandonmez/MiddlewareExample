@@ -17,16 +17,24 @@ app.UseHttpsRedirection();
 
 app.Use(async (context, next) =>
 {
-    Console.WriteLine("Start Use Middleware");
+    Console.WriteLine("Start Use Middleware 1");
     await next.Invoke();
-    Console.WriteLine("Stop Use Middleware");
+    Console.WriteLine("Stop Use Middleware 1");
 });
 
-app.Run(async context =>
+app.Use(async (context, next) =>
 {
-    await context.Response.WriteAsync("Run Middleware");
+    Console.WriteLine("Start Use Middleware 2");
+    await next.Invoke();
+    Console.WriteLine("Stop Use Middleware 2");
 });
 
+app.Use(async (context, next) =>
+{
+    Console.WriteLine("Start Use Middleware 3");
+    await next.Invoke();
+    Console.WriteLine("Stop Use Middleware 3");
+});
 
 app.UseStaticFiles();
 
@@ -40,4 +48,4 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 
-//app.Run();
+app.Run();
