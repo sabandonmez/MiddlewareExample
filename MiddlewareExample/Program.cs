@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Builder;
+using MiddlewareExample.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -14,32 +17,11 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-
-app.Use(async (context, next) =>
-{
-    Console.WriteLine("Start Use Middleware 1");
-    await next.Invoke();
-    Console.WriteLine("Stop Use Middleware 1");
-});
-
-app.Use(async (context, next) =>
-{
-    Console.WriteLine("Start Use Middleware 2");
-    await next.Invoke();
-    Console.WriteLine("Stop Use Middleware 2");
-});
-
-app.Use(async (context, next) =>
-{
-    Console.WriteLine("Start Use Middleware 3");
-    await next.Invoke();
-    Console.WriteLine("Stop Use Middleware 3");
-});
-
 app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseHello();
 
 app.UseAuthorization();
 
